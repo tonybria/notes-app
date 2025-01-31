@@ -23,10 +23,10 @@ if (password !== confirmPassword) {
 // Simply navigate to Home screen after successful signup
 Alert.alert('Success', 'Account created successfully!');
 
-// Navigate to Home screen
+// Navigate directly to Home screen after signup
 navigation.reset({
   index: 0,
-  routes: [{ name: 'Home', params: {username} }],
+  routes: [{ name: 'Home' }],
 });
   };
 
@@ -119,3 +119,4 @@ const styles = StyleSheet.create({
 });
 
 export default SignUpScreen;
+

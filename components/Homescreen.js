@@ -1,11 +1,10 @@
 import "react-native-gesture-handler";
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput,Image, TouchableOpacity, Modal, StyleSheet, FlatList, Alert, ScrollView, Button } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { View, Text, TextInput, Image, TouchableOpacity, Modal, StyleSheet, FlatList, Alert, ScrollView, Button } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Notifications } from 'expo-notifications';
-import AppNavigator from '../components/AppNavigator'; // Import your custom navigator
+import * as Notifications from 'expo-notifications';
+import { createStackNavigator } from '@react-navigation/stack';
+import AppNavigator from '../components/AppNavigator'; 
 
 const Stack = createStackNavigator();
 
@@ -20,8 +19,8 @@ const Header = ({ navigation }) => (
 
 const Profile = () => {
     const [user, setUser] = useState({
-        name: "John Doe",
-        email: "johndoe@example.com",
+        name: "Tony Kiptole",
+        email: "Tonykiptole@gmail.com",
         profilePicture: "https://via.placeholder.com/150",
     });
 
@@ -41,150 +40,159 @@ const Profile = () => {
 };
 
 const HomeScreen = ({ navigation }) => {
-    const [notes, setNotes] = useState([]);
-    const [archivedNotes, setArchivedNotes] = useState([]);
-    const [selectedNote, setSelectedNote] = useState(null);
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [tags, setTags] = useState([]);
-    const [color, setColor] = useState("#FFFFFF");
-    const [isFavorite, setIsFavorite] = useState(false);
-    const [showArchived, setShowArchived] = useState(false);
-    const [searchText, setSearchText] = useState("");
-    const [modalVisible, setModalVisible] = useState(false);
+  const [notes, setNotes] = useState([]);
+  const [archivedNotes, setArchivedNotes] = useState([]);
+  const [selectedNote, setSelectedNote] = useState(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [tags, setTags] = useState([]);
+  const [color, setColor] = useState("#FFFFFF");
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [showArchived, setShowArchived] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
 
-    const colors = ["#FFCCCC", "#CCFFCC", "#CCCCFF", "#FFFFCC", "#FFCCFF"];
+  const colors = ["#FFCCCC", "#CCFFCC", "#CCCCFF", "#FFFFCC", "#FFCCFF"];
 
-    useEffect(() => {
-        Notifications.requestPermissionsAsync().then(({ status }) => {
-            if (status !== 'granted') {
-                Alert.alert('Permission required', 'Please enable notifications in settings.');
-            }
-        });
+  useEffect(() => {
+    Notifications.requestPermissionsAsync().then(({ status }) => {
+      if (status !== 'granted') {
+        Alert.alert('Permission required', 'Please enable notifications in settings.');
+      }
+    });
 
-        Notifications.setNotificationHandler({
-            handleNotification: async () => ({
-                shouldShowAlert: true,
-                shouldPlaySound: false,
-                shouldSetBadge: false,
-            }),
-        });
-    }, []);
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+  }, []);
 
-    const handleSaveNote = () => {
-        if (title.trim() === "" || content.trim() === "") {
-            Alert.alert("Error", "Both title and content are required.");
-            return;
-        }
+  const handleSaveNote = () => {
+    if (title.trim() === "" || content.trim() === "") {
+      Alert.alert("Error", "Both title and content are required.");
+      return;
+    }
 
-        if (selectedNote) {
-            const updatedNotes = notes.map((note) =>
-                note.id === selectedNote.id
-                    ? { ...note, title, content, tags, color, isFavorite }
-                    : note
-            );
-            setNotes(updatedNotes);
-        } else {
-            const newNote = {
-                id: Date.now(),
-                title,
-                content,
-                tags,
-                color,
-                isFavorite,
-            };
-            setNotes([...notes, newNote]);
-        }
+if (selectedNote) {
+  const updatedNotes = notes.map((note) =>
+    note.id === selectedNote.id
+      ? { ...note, title, content, tags, color, isFavorite }
+      : note
+  );
+  setNotes(updatedNotes);
+} else {
+  const newNote = {
+    id: Date.now(),
+    title,
+    content,
+    tags,
+    color,
+    isFavorite,
+  };
+  setNotes([...notes, newNote]);
+}
 
-        resetModal();
-    };
+resetModal();
+  };
 
-    const resetModal = () => {
-        setSelectedNote(null);
-        setTitle("");
-        setContent("");
-        setTags([]);
-        setColor("#FFFFFF");
-        setIsFavorite(false);
-        setModalVisible(false);
-    };
+  const resetModal = () => {
+    setSelectedNote(null);
+    setTitle("");
+    setContent("");
+    setTags([]);
+    setColor("#FFFFFF");
+    setIsFavorite(false);
+    setModalVisible(false);
+  };
 
-    const handleEditNote = (note) => {
-        setSelectedNote(note);
-        setTitle(note.title);
-        setContent(note.content);
-        setTags(note.tags);
-        setColor(note.color);
-        setIsFavorite(note.isFavorite);
-        setModalVisible(true);
-    };
+  const handleEditNote = (note) => {
+    setSelectedNote(note);
+    setTitle(note.title);
+    setContent(note.content);
+    setTags(note.tags);
+    setColor(note.color);
+    setIsFavorite(note.isFavorite);
+    setModalVisible(true);
+  };
 
-    const handleArchiveNote = (noteId) => {
-        const noteToArchive = notes.find((note) => note.id === noteId);
-        setArchivedNotes([...archivedNotes, noteToArchive]);
-        setNotes(notes.filter((note) => note.id !== noteId));
-    };
+  const handleArchiveNote = (noteId) => {
+    const noteToArchive = notes.find((note) => note.id === noteId);
+    setArchivedNotes([...archivedNotes, noteToArchive]);
+    setNotes(notes.filter((note) => note.id !== noteId));
+  };
 
-    const handleUnarchiveNote = (noteId) => {
-        const noteToUnarchive = archivedNotes.find((note) => note.id === noteId);
-        setNotes([...notes, noteToUnarchive]);
-        setArchivedNotes(archivedNotes.filter((note) => note.id !== noteId));
-    };
+  const handleUnarchiveNote = (noteId) => {
+    const noteToUnarchive = archivedNotes.find((note) => note.id === noteId);
+    setNotes([...notes, noteToUnarchive]);
+    setArchivedNotes(archivedNotes.filter((note) => note.id !== noteId));
+  };
 
-    const toggleFavorite = (noteId) => {
-        const updatedNotes = notes.map((note) =>
-            note.id === noteId ? { ...note, isFavorite: !note.isFavorite } : note
-        );
-        setNotes(updatedNotes);
-    };
+  const toggleFavorite = (noteId) => {
+    const updatedNotes = notes.map((note) =>
+      note.id === noteId ? { ...note, isFavorite: !note.isFavorite } : note
+    );
+    setNotes(updatedNotes);
+  };
 
-    const handleDeleteNote = (noteId) => {
-        Alert.alert(
-            "Delete Note",
-            "Are you sure you want to delete this note?",
-            [
-                {
-                    text: "Cancel",
-                    style: "cancel",
-                },
-                {
-                    text: "Delete",
-                    style: "destructive",
-                    onPress: () => {
-                        setNotes(notes.filter((note) => note.id !== noteId));
-                    },
-                },
-            ],
-            { cancelable: true }
-        );
-    };
+  const handleDeleteNote = (noteId) => {
+    Alert.alert(
+      "Delete Note",
+      "Are you sure you want to delete this note?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => {
+            setNotes(notes.filter((note) => note.id !== noteId));
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  };
 
-    const renderNotes = showArchived
-        ? archivedNotes
-        : notes.filter((note) =>
-              note.title.toLowerCase().includes(searchText.toLowerCase())
-          );
+  const renderNotes = showArchived
+    ? archivedNotes
+    : notes.filter((note) =>
+        note.title.toLowerCase().includes(searchText.toLowerCase())
+      );
 
-    return (
-        <View style={styles.container}>
-            <Header navigation={navigation} />
+  return (
+    <View style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Notes App</Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Profile")} style={styles.profileIcon}>
+          <Ionicons name="person-circle-outline" size={30} color="white" />
+        </TouchableOpacity>
+      </View>
 
-            <TextInput
-                style={styles.searchBar}
-                placeholder="Search notes..."
-                value={searchText}
-                onChangeText={setSearchText}
-            />
+  {/* Search Bar */}
+  <TextInput
+    style={styles.searchBar}
+    placeholder="Search notes..."
+    value={searchText}
+    onChangeText={setSearchText}
+  />
 
-            <TouchableOpacity
-                style={styles.toggleButton}
-                onPress={() => setShowArchived(!showArchived)}
-            >
-                <Text style={styles.toggleButtonText}>
-                    {showArchived ? "Show Active Notes" : "Show Archived Notes"}
-                </Text>
-            </TouchableOpacity>
+  {/* Toggle between archived and active notes */}
+  <TouchableOpacity
+    style={styles.toggleButton}
+    onPress={() => setShowArchived(!showArchived)}
+  >
+    <Text style={styles.toggleButtonText}>
+      {showArchived ? "Show Active Notes" : "Show Archived Notes"}
+    </Text>
+  </TouchableOpacity>
 
+  {/* Display Notes */}
   <FlatList
     data={renderNotes}
     keyExtractor={(item) => item.id.toString()}
@@ -241,92 +249,83 @@ const HomeScreen = ({ navigation }) => {
     )}
   />
 
-            <TouchableOpacity
-                style={styles.addNoteButton}
-                onPress={() => setModalVisible(true)} // Open modal to add note
-            >
-                <Ionicons name="add" size={24} color="white" />
-            </TouchableOpacity>
+  {/* Add New Note Button */}
+  <TouchableOpacity
+    style={styles.addNoteButton}
+    onPress={() => setModalVisible(true)}
+  >
+    <Ionicons name="add" size={24} color="white" />
+  </TouchableOpacity>
 
-            {/* Modal for adding/editing notes */}
-            <Modal visible={modalVisible} animationType="slide">
-                <ScrollView style={styles.modalContainer}>
-                    <Text style={styles.modalTitle}>Add/Edit Note</Text>
-                    <TextInput
-                        style={styles.modalInput}
-                        placeholder="Note Title"
-                        value={title}
-                        onChangeText={setTitle}
-                    />
-                    <TextInput
-                        style={styles.modalContentInput}
-                        placeholder="Note Content"
-                        value={content}
-                        onChangeText={setContent}
-                        multiline
-                    />
-                    <Text style={styles.modalLabel}>Tags (comma separated):</Text>
-                    <TextInput
-                        style={styles.modalInput}
-                        placeholder="e.g. Work, Personal"
-                        value={tags.join(",")}
-                        onChangeText={(text) =>
-                            setTags(text.split(",").map((t) => t.trim()))
-                        }
-                    />
-                    <Text style={styles.modalLabel}>Select Color:</Text>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        {colors.map((c) => (
-                            <TouchableOpacity
-                                key={c}
-                                style={[
-                                    styles.colorOption,
-                                    { backgroundColor: c },
-                                    color === c ? styles.selectedColorOption : null,
-                                ]}
-                                onPress={() => setColor(c)}
-                            />
-                        ))}
-                    </ScrollView>
+  {/* Modal for adding/editing notes */}
+  <Modal visible={modalVisible} animationType="slide">
+    <ScrollView style={styles.modalContainer}>
+      <Text style={styles.modalTitle}>Add/Edit Note</Text>
+      <TextInput
+        style={styles.modalInput}
+        placeholder="Note Title"
+        value={title}
+        onChangeText={setTitle}
+      />
+      <TextInput
+        style={styles.modalContentInput}
+        placeholder="Note Content"
+        value={content}
+        onChangeText={setContent}
+        multiline
+      />
+      <Text style={styles.modalLabel}>Tags (comma separated):</Text>
+      <TextInput
+        style={styles.modalInput}
+        placeholder="e.g. Work, Personal"
+        value={tags.join(",")}
+        onChangeText={(text) =>
+          setTags(text.split(",").map((t) => t.trim()))
+        }
+      />
+      <Text style={styles.modalLabel}>Select Color:</Text>
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        {colors.map((c) => (
+          <TouchableOpacity
+            key={c}
+            style={[styles.colorOption, { backgroundColor: c }, color === c ? styles.selectedColorOption : null]}
+            onPress={() => setColor(c)}
+          />
+        ))}
+      </ScrollView>
 
-                    <View style={styles.modalButtonsContainer}>
-                        <Button title="Save" onPress={handleSaveNote} color="#007BFF" />
-                        <Button title="Cancel" onPress={resetModal} color="#FF3B30" />
-                    </View>
-                </ScrollView>
-            </Modal>
-        </View>
-    );
+      <View style={styles.modalButtonsContainer}>
+        <Button title="Save" onPress={handleSaveNote} color="#007BFF" />
+        <Button title="Cancel" onPress={resetModal} color="#FF3B30" />
+      </View>
+    </ScrollView>
+  </Modal>
+</View>
+  );
 };
 
-const App = () => {
-    return (
-        <NavigationContainer>
-            <AppNavigator />
-        </NavigationContainer>
-    );
-};
+
 
 const styles = StyleSheet.create({
-     container: {
-        flex: 1,
-        backgroundColor: "#E3F2FD", // Set a solid background color
-    },
-    header: {
-        backgroundColor: "#0288D1",
-        padding: 15,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-    },
-    headerTitle: {
-        fontSize: 20,
-        color: "white",
-        fontWeight: "bold",
-        flex: 1, // Takes available space to push the profile icon to the right
-        textAlign: "center", // Centers the title
-    },
-    profileIcon: {
+  container: {
+    flex: 1,
+    backgroundColor: "#E3F2FD",
+  },
+  header: {
+    backgroundColor: "#0288D1",
+    padding: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: "white",
+    fontWeight: "bold",
+    flex: 1,
+    textAlign: "center",
+  },
+  profileIcon: {
     marginLeft: 10,
   },
   searchBar: {
@@ -402,22 +401,33 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     modalInput: {
-        marginBottom: 10,
+    marginBottom: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#f5f5f5",
+    borderWidth: 1,
+    borderColor: "#ddd",
   },
   modalContentInput: {
         marginBottom: 10,
-    },
-    modalLabel: {
-        fontSize: 14,
-        marginVertical: 5,
-    },
-    colorOption: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        marginRight: 10,
-    },
-    selectedColorOption: {
+    padding: 10,
+    height: 150,
+    borderRadius: 10,
+    backgroundColor: "#f5f5f5",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  modalLabel: {
+    marginBottom: 5,
+    fontWeight: "bold",
+  },
+  colorOption: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+    borderRadius: 25,
+  },
+  selectedColorOption: {
     borderWidth: 3,
     borderColor: "#000",
   },
@@ -426,4 +436,6 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+
+
+export default Homescreen;

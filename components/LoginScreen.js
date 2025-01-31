@@ -19,10 +19,10 @@ if (!email || !password) {
 // Simulate a successful login
 Alert.alert('Login Successful');
 
-// Navigate to Home screen
+// Navigate directly to Home screen after login
 navigation.reset({
   index: 0,
-  routes: [{ name: 'Home', params: {username}}],
+  routes: [{ name: 'Home' }],
 });
   };
 
