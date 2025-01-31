@@ -12,19 +12,6 @@ const Stack = createStackNavigator();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} options={{headerShown: false}}></Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-const AppNavigator = () => {
-
-
- return (
    <Stack.Navigator 
      initialRouteName= "Home"
      screenOptions={{
@@ -56,17 +43,13 @@ const AppNavigator = () => {
          title: 'Sign Up',
          headerShown: true
        }}
-     >
-     
-     </Stack.Screen>
-     <Stack.Screen
-       name="Home"
-       component={HomeScreen}
-       options={{ headerShown: false }}
-     />
-     
-     
-   </Stack.Navigator>
+        />
+        <Stack.Screen 
+          name="Home" 
+          component={Homescreen} 
+          options={{ headerShown: false }} 
+        />
+      </Stack.Navigator>
    
  );
 };

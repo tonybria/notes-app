@@ -7,7 +7,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { Notifications } from 'expo-notifications';
 import AppNavigator from '../components/AppNavigator'; // Import your custom navigator
 
-
 const Stack = createStackNavigator();
 
 const Header = ({ navigation }) => (
@@ -186,62 +185,61 @@ const HomeScreen = ({ navigation }) => {
                 </Text>
             </TouchableOpacity>
 
-            <FlatList
-                data={renderNotes}
-                keyExtractor={(item) => item.id.toString()}
-                numColumns={2}
-                contentContainerStyle={styles.notesContainer}
-                renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={[styles.noteCard, { backgroundColor: item.color }]}
-                        onPress={() => handleEditNote(item)}
-                    >
-                        <Text style={styles.noteTitle}>{item.title}</Text>
-                        <Text style={styles.noteContent} numberOfLines={3}>
-                            {item.content}
-                        </Text>
-                        <Text style={styles.noteTags}>
-                            Tags: {item.tags.join(", ")}
-                        </Text>
-                        <View style={styles.noteActions}>
-                            <TouchableOpacity
-                                onPress={() => toggleFavorite(item.id)}
-                                style={styles.favoriteButton}
-                            >
-                                <Ionicons
-                                    name={item.isFavorite ? "heart" : "heart-outline"}
-                                    size={20}
-                                    color="red"
-                                />
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                onPress={() =>
-                                    showArchived
-                                        ? handleUnarchiveNote(item.id)
-                                        : handleArchiveNote(item.id)
-                                }
-                            >
-                                <Ionicons
-                                    name={showArchived ? "return-up-back" : "archive-outline"}
-                                    size={20}
-                                    color="#333"
-                                />
-                            </TouchableOpacity>
-                            {/* Delete Button */}
-                            <TouchableOpacity
-                                onPress={() => handleDeleteNote(item.id)}
-                                style={styles.deleteButton}
-                            >
-                                <Ionicons
-                                    name="trash-bin-outline"
-                                    size={20}
-                                    color="red"
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </TouchableOpacity>
-                )}
+  <FlatList
+    data={renderNotes}
+    keyExtractor={(item) => item.id.toString()}
+    numColumns={2}
+    contentContainerStyle={styles.notesContainer}
+    renderItem={({ item }) => (
+      <TouchableOpacity
+        style={[styles.noteCard, { backgroundColor: item.color }]}
+        onPress={() => handleEditNote(item)}
+      >
+        <Text style={styles.noteTitle}>{item.title}</Text>
+        <Text style={styles.noteContent} numberOfLines={3}>
+          {item.content}
+        </Text>
+        <Text style={styles.noteTags}>
+          Tags: {item.tags.join(", ")}
+        </Text>
+        <View style={styles.noteActions}>
+          <TouchableOpacity
+            onPress={() => toggleFavorite(item.id)}
+            style={styles.favoriteButton}
+          >
+            <Ionicons
+              name={item.isFavorite ? "heart" : "heart-outline"}
+              size={20}
+              color="red"
             />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              showArchived
+                ? handleUnarchiveNote(item.id)
+                : handleArchiveNote(item.id)
+            }
+          >
+            <Ionicons
+              name={showArchived ? "return-up-back" : "archive-outline"}
+              size={20}
+              color="#333"
+            />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => handleDeleteNote(item.id)}
+            style={styles.deleteButton}
+          >
+            <Ionicons
+              name="trash-bin-outline"
+              size={20}
+              color="red"
+            />
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
+    )}
+  />
 
             <TouchableOpacity
                 style={styles.addNoteButton}
@@ -329,100 +327,84 @@ const styles = StyleSheet.create({
         textAlign: "center", // Centers the title
     },
     profileIcon: {
-        marginLeft: 10, // Add a small margin to the left of the icon
-    },
-    profileContainer: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    
-    searchBar: {
-        margin: 10,
-        padding: 10,
-        borderRadius: 10,
-        backgroundColor: "#f5f5f5",
-        borderWidth: 1,
-        borderColor: "#ddd",
-    },
-    toggleButton: {
-        backgroundColor: "#0288D1",
-        padding: 10,
-        marginHorizontal: 10,
-        borderRadius: 10,
-        alignItems: "center",
-    },
-    toggleButtonText: {
-        color: "white",
-        fontWeight: "bold",
-    },
-    notesContainer: {
-        paddingHorizontal: 10,
-        paddingTop: 10,
-    },
-    noteCard: {
-        flex: 1,
-        margin: 5,
-        padding: 10,
-        borderRadius: 10,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    noteTitle: {
-        fontWeight: "bold",
-    },
-    noteContent: {
-        color: "#333",
-    },
-    noteTags: {
-        fontSize: 12,
-        color: "#777",
-    },
-    noteActions: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 10,
-    },
-    favoriteButton: {
-        padding: 5,
-    },
-    deleteButton: {
-        padding: 5,
-    },
-    addNoteButton: {
-        position: "absolute",
-        bottom: 20,
-        right: 20,
-        backgroundColor: "#0288D1",
-        padding: 15,
-        borderRadius: 50,
-    },
-    modalContainer: {
-        flex: 1,
-        padding: 20,
-    },
-    modalTitle: {
-        fontSize: 24,
-        fontWeight: "bold",
+    marginLeft: 10,
+  },
+  searchBar: {
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#f5f5f5",
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  toggleButton: {
+    backgroundColor: "#0288D1",
+    padding: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  toggleButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  notesContainer: {
+    paddingHorizontal: 10,
+    paddingTop: 10,
+  },
+  noteCard: {
+    flex: 1,
+    margin: 5,
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  noteTitle: {
+    fontWeight: "bold",
+  },
+  noteContent: {
+    color: "#333",
+  },
+  noteTags: {
+    fontSize: 12,
+    color: "#777",
+  },
+  noteActions: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  favoriteButton: {
+    padding: 5,
+  },
+  deleteButton: {
+    padding: 5,
+  },
+  addNoteButton: {
+    position: "absolute",
+    bottom: 20,
+    right: 20,
+    backgroundColor: "#0288D1",
+    padding: 15,
+    borderRadius: 50,
+  },
+  modalContainer: {
+    flex: 1,
+    padding: 20,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
         marginBottom: 10,
     },
     modalInput: {
-        height: 40,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
         marginBottom: 10,
-    },
-    modalContentInput: {
-        height: 100,
-        borderColor: "#ccc",
-        borderWidth: 1,
-        borderRadius: 5,
-        paddingHorizontal: 10,
+  },
+  modalContentInput: {
         marginBottom: 10,
     },
     modalLabel: {
@@ -436,41 +418,12 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     selectedColorOption: {
-        borderWidth: 2,
-        borderColor: "#000",
-    },
-    modalButtonsContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 20,
-    },
-    
-    profileImage: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginBottom: 10,
-    },
-    profileName: {
-        fontSize: 22,
-        fontWeight: "bold",
-        marginBottom: 5,
-    },
-    profileEmail: {
-        fontSize: 16,
-        color: "#666",
-        marginBottom: 20,
-    },
-    logoutButton: {
-        backgroundColor: "#FF3B30",
-        padding: 10,
-        borderRadius: 10,
-    },
-    logoutButtonText: {
-        color: "white",
-        fontSize: 16,
-        fontWeight: "bold",
-    },
+    borderWidth: 3,
+    borderColor: "#000",
+  },
+  modalButtonsContainer: {
+    marginTop: 20,
+  },
 });
 
 export default HomeScreen;
