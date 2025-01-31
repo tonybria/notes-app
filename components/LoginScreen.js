@@ -11,52 +11,52 @@ const LoginScreen = () => {
   const handleLogin = () => {
     console.log('Login button pressed'); 
 
-if (!email || !password) {
-  Alert.alert('Error', 'Email and Password are required');
-  return;
-}
+    if (!email || !password) {
+      Alert.alert('Error', 'Email and Password are required');
+      return;
+    }
 
-// Simulate a successful login
-Alert.alert('Login Successful');
+    // Simulate a successful login
+    Alert.alert('Login Successful');
 
-// Navigate to Home screen
-navigation.reset({
-  index: 0,
-  routes: [{ name: 'Home', params: {username}}],
-});
+    // Navigate directly to Home screen after login
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
 
-  <TextInput
-    style={styles.input}
-    placeholder="Email"
-    value={email}
-    onChangeText={setEmail}
-    keyboardType="email-address"
-    autoCapitalize="none"
-    placeholderTextColor="#aaa"
-  />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
 
-  <TextInput
-    style={styles.input}
-    placeholder="Password"
-    value={password}
-    onChangeText={setPassword}
-    secureTextEntry
-    placeholderTextColor="#aaa"
-  />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        placeholderTextColor="#aaa"
+      />
 
-  <TouchableOpacity style={styles.button} onPress={handleLogin}>
-    <Text style={styles.buttonText}>Login</Text>
-  </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
 
-  <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-    <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
-  </TouchableOpacity>
-</View>
+      <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+        <Text style={styles.linkText}>Don't have an account? Sign Up</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 

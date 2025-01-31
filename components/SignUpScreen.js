@@ -15,70 +15,70 @@ const SignUpScreen = () => {
       return;
     }
 
-if (password !== confirmPassword) {
-  Alert.alert('Error', 'Passwords do not match!');
-  return;
-}
+    if (password !== confirmPassword) {
+      Alert.alert('Error', 'Passwords do not match!');
+      return;
+    }
 
-// Simply navigate to Home screen after successful signup
-Alert.alert('Success', 'Account created successfully!');
+    // Simply navigate to Home screen after successful signup
+    Alert.alert('Success', 'Account created successfully!');
 
-// Navigate to Home screen
-navigation.reset({
-  index: 0,
-  routes: [{ name: 'Home', params: {username} }],
-});
+    // Navigate directly to Home screen after signup
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Home' }],
+    });
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Sign Up</Text>
 
-  <TextInput
-    style={styles.input}
-    placeholder="Username"
-    value={username}
-    onChangeText={setUsername}
-    autoCapitalize="none"
-    placeholderTextColor="#aaa"
-  />
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
 
-  <TextInput
-    style={styles.input}
-    placeholder="Email"
-    value={email}
-    onChangeText={setEmail}
-    keyboardType="email-address"
-    autoCapitalize="none"
-    placeholderTextColor="#aaa"
-  />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        placeholderTextColor="#aaa"
+      />
 
-  <TextInput
-    style={styles.input}
-    placeholder="Password"
-    value={password}
-    onChangeText={setPassword}
-    secureTextEntry
-    placeholderTextColor="#aaa"
-  />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        placeholderTextColor="#aaa"
+      />
 
-  <TextInput
-    style={styles.input}
-    placeholder="Confirm Password"
-    value={confirmPassword}
-    onChangeText={setConfirmPassword}
-    secureTextEntry
-    placeholderTextColor="#aaa"
-  />
+      <TextInput
+        style={styles.input}
+        placeholder="Confirm Password"
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+        secureTextEntry
+        placeholderTextColor="#aaa"
+      />
 
-  <TouchableOpacity style={styles.button} onPress={handleSignUp}>
-    <Text style={styles.buttonText}>Sign Up</Text>
-  </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
 
-  <TouchableOpacity onPress={() => navigation.navigate('Login')}>
-    <Text style={styles.linkText}>Already have an account? Login</Text>
-  </TouchableOpacity>
-</View>
+      <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+        <Text style={styles.linkText}>Already have an account? Login</Text>
+      </TouchableOpacity>
+    </View>
   );
 };
 
